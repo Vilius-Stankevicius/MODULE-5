@@ -1,0 +1,56 @@
+import java.util.ArrayList;
+import java.util.Scanner;
+
+public class Main {
+    public static void main(String[] args){
+        Scanner scanner = new Scanner(System.in);
+
+        ArrayList<String> weekDay = new ArrayList<>();
+        ArrayList<Double> dayTemp = new ArrayList<>();
+
+        for (int i=0; i<7; i++){
+            System.out.print("Enter the day of the week: ");
+            String day = scanner.nextLine();
+            System.out.print("Enter the average temperature for " + day + ": ");
+            double temperature = scanner.nextDouble();
+
+
+            scanner.nextLine();
+            weekDay.add(day);
+            dayTemp.add(temperature);
+        }
+
+        while (true){
+            System.out.print("Enter the day of the week  or 'average' for weekly average: ");
+            String input = scanner.nextLine();
+
+            if (input.equalsIgnoreCase("average")) {
+                double weeklyAverage = calculateWeeklyAverage(dayTemp);
+                System.out.println("Weekly Average Temperature: " + weeklyAverage);
+            } else if (weekDay.contains(input)) {
+                int index = weekDay.indexOf(input);
+                double temperature = dayTemp.get(index);
+                System.out.println("Temperature for " + input + ": " + temperature);
+            } else {
+                System.out.println("Invalid input. Please enter a valid day or 'average'.");
+            }
+
+
+            System.out.print("Do you want to check another day or 'average' (yes/no)? ");
+            String continueInput = scanner.nextLine();
+            if (!continueInput.equalsIgnoreCase("yes")){
+                break;
+            }
+        }
+        scanner.close();
+    }
+
+
+    private static double calculateWeeklyAverage(ArrayList<Double> temperatures){
+        double sum = 0;
+        for (double temperature : temperatures){
+            sum += temperature;
+        }
+        return sum / temperatures.size();
+    }
+}
